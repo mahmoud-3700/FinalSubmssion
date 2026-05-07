@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+  History screen — newest-first feed of device events, M3 list style.
+  Combines events from DeviceEventDAO (past sessions) and live Observer
+  callbacks (current session).
+-->
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.smarthome.ui.HistoryController"
+            styleClass="main-scroll"
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED">
+
+  <content>
+    <VBox fx:id="eventsContainer" styleClass="content-pane" spacing="10">
+      <padding><Insets top="20" right="16" bottom="20" left="16"/></padding>
+
+      <Label text="Activity" styleClass="room-name"/>
+      <Label text="Device events from this session and earlier — persisted via the DAO pattern."
+             styleClass="decorator-description" wrapText="true"/>
+
+      <!-- Event rows are appended here at runtime by HistoryController. -->
+    </VBox>
+  </content>
+
+</ScrollPane>

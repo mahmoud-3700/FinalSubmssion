@@ -1,0 +1,565 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Smart Home — Material 3 Dark
+   ─────────────────────────────────────────────────────────────────────
+   Tokens follow Material 3's dark scheme. In M3 dark, "elevation" is
+   communicated by lighter surfaces (a primary tone overlay baked into
+   the palette), not by drop shadows. We expose those tiers directly:
+     surface < surface-container-low < surface-container <
+     surface-container-high < surface-container-highest
+   plus the standard primary / secondary / tertiary / error roles.
+   ───────────────────────────────────────────────────────────────────── */
+
+.root {
+    /* Neutral surfaces (M3 dark, warm-tinted) */
+    -surface:                   #141218;
+    -surface-low:               #1D1B20;
+    -surface-container:         #211F26;
+    -surface-high:              #2B2930;
+    -surface-highest:           #36343B;
+    -surface-inverse:           #E6E0E9;
+
+    /* On-surface text */
+    -on-surface:                #E6E0E9;
+    -on-surface-variant:        #CAC4D0;
+    -on-surface-faint:          #79747E;
+    -on-surface-inverse:        #322F35;
+
+    /* Outlines / dividers */
+    -outline:                   #938F99;
+    -outline-variant:           #49454F;
+
+    /* Primary (warm amber — M3 expressive) */
+    -primary:                   #FFB870;
+    -on-primary:                #48290B;
+    -primary-container:         #684626;
+    -on-primary-container:      #FFDDB7;
+
+    /* Secondary (cool teal — locked / secure roles) */
+    -secondary:                 #80D4C7;
+    -on-secondary:              #003731;
+    -secondary-container:       #00504A;
+    -on-secondary-container:    #9CF1E3;
+
+    /* Tertiary (coral — accent variety, used sparingly) */
+    -tertiary:                  #FFB4A8;
+    -on-tertiary:               #690005;
+    -tertiary-container:        #93000A;
+    -on-tertiary-container:     #FFDAD4;
+
+    /* Error */
+    -error:                     #F2B8B5;
+    -on-error:                  #601410;
+    -error-container:           #8C1D18;
+    -on-error-container:        #F9DEDC;
+
+    -fx-background-color: -surface;
+    -fx-font-family: "Roboto", "Segoe UI", "Inter", "Helvetica Neue", sans-serif;
+    -fx-text-fill: -on-surface;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   Top app bar — M3 "Center-aligned" with title + trailing icon button
+   ═════════════════════════════════════════════════════════════════════ */
+.top-bar {
+    -fx-background-color: -surface;
+    -fx-padding: 18 16 14 20;
+    -fx-spacing: 10;
+}
+.app-title {
+    -fx-text-fill: -on-surface;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+.app-title-amber {
+    -fx-text-fill: -primary;
+    -fx-font-size: 18px;
+}
+.app-overline {
+    -fx-text-fill: -on-surface-variant;
+    -fx-font-size: 10px;
+    -fx-letter-spacing: 0.15em;
+}
+
+/* M3 filled-tonal button (used for top-bar Undo) */
+.undo-button {
+    -fx-background-color: -secondary-container;
+    -fx-text-fill: -on-secondary-container;
+    -fx-border-color: transparent;
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+    -fx-padding: 8 16 8 16;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.undo-button:hover    { -fx-background-color: derive(-secondary-container, 8%); }
+.undo-button:pressed  { -fx-background-color: derive(-secondary-container, -8%); }
+.undo-button:disabled { -fx-opacity: 0.38; -fx-cursor: default; }
+
+/* ═════════════════════════════════════════════════════════════════════
+   Mode picker — M3 segmented button group
+   Group container is outlined; selected segment fills with
+   secondary-container; rest stay transparent.
+   ═════════════════════════════════════════════════════════════════════ */
+.mode-row {
+    -fx-background-color: -surface;
+    -fx-padding: 4 16 16 16;
+    -fx-spacing: 10;
+}
+.mode-row > .label {
+    -fx-text-fill: -on-surface-variant;
+    -fx-font-size: 11px;
+    -fx-letter-spacing: 0.15em;
+    -fx-font-weight: bold;
+}
+.mode-segment {
+    -fx-background-color: transparent;
+    -fx-text-fill: -on-surface;
+    -fx-border-color: -outline;
+    -fx-border-width: 1 0 1 1;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 12 0 12 0;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.05em;
+    -fx-cursor: hand;
+}
+.mode-segment:hover {
+    -fx-background-color: derive(-surface, 8%);
+}
+.mode-segment-active {
+    -fx-background-color: -secondary-container;
+    -fx-text-fill: -on-secondary-container;
+}
+.mode-segment-active:hover {
+    -fx-background-color: derive(-secondary-container, 8%);
+}
+.mode-segment-first {
+    -fx-border-radius: 100 0 0 100;
+    -fx-background-radius: 100 0 0 100;
+    -fx-border-width: 1 0 1 1;
+}
+.mode-segment-last {
+    -fx-border-radius: 0 100 100 0;
+    -fx-background-radius: 0 100 100 0;
+    -fx-border-width: 1 1 1 1;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   Snackbar / status banner — M3 inverse-surface snackbar
+   ═════════════════════════════════════════════════════════════════════ */
+.status-banner {
+    -fx-background-color: -surface-inverse;
+    -fx-padding: 12 18 12 18;
+    -fx-background-radius: 4;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 8, 0.25, 0, 4);
+}
+.status-banner-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: -on-surface-inverse;
+}
+.status-banner-success { -fx-background-color: -secondary-container; }
+.status-banner-success .status-banner-text { -fx-text-fill: -on-secondary-container; }
+.status-banner-error   { -fx-background-color: -error-container; }
+.status-banner-error   .status-banner-text { -fx-text-fill: -on-error-container; }
+
+/* ═════════════════════════════════════════════════════════════════════
+   Main scroll surface
+   ═════════════════════════════════════════════════════════════════════ */
+.main-scroll {
+    -fx-background-color: -surface;
+    -fx-background: -surface;
+    -fx-padding: 0;
+}
+.main-scroll .viewport { -fx-background-color: -surface; }
+.main-scroll .scroll-bar { -fx-background-color: -surface; }
+.main-scroll .scroll-bar .thumb {
+    -fx-background-color: -outline-variant;
+    -fx-background-radius: 4;
+}
+.main-scroll .scroll-bar .thumb:hover {
+    -fx-background-color: -outline;
+}
+.main-scroll .corner { -fx-background-color: -surface; }
+
+.content-pane {
+    -fx-padding: 16;
+    -fx-spacing: 18;
+    -fx-background-color: -surface;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   Room headers
+   ═════════════════════════════════════════════════════════════════════ */
+.room-header {
+    -fx-padding: 4 4 2 6;
+    -fx-spacing: 10;
+}
+.room-name {
+    -fx-text-fill: -on-surface;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+.room-count {
+    -fx-text-fill: -on-surface-variant;
+    -fx-font-size: 12px;
+    -fx-padding: 2 10 2 10;
+    -fx-background-color: -surface-container;
+    -fx-background-radius: 100;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   Device cards — M3 filled card with leading icon avatar + state chip
+   ═════════════════════════════════════════════════════════════════════ */
+.device-card {
+    -fx-background-color: -surface-container;
+    -fx-border-color: transparent;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-padding: 16 16 14 16;
+    -fx-spacing: 14;
+}
+.device-card:hover {
+    -fx-background-color: -surface-high;
+}
+
+/* Icon avatar — circular tonal container (M3 list-item leading) */
+.device-avatar {
+    -fx-background-color: -surface-high;
+    -fx-background-radius: 100;
+    -fx-min-width: 44;
+    -fx-min-height: 44;
+    -fx-pref-width: 44;
+    -fx-pref-height: 44;
+    -fx-alignment: center;
+}
+.device-avatar-on {
+    -fx-background-color: -primary-container;
+}
+.device-avatar-locked {
+    -fx-background-color: -secondary-container;
+}
+.device-icon {
+    -fx-font-size: 20px;
+    -fx-text-fill: -on-surface;
+}
+.device-icon-on    { -fx-text-fill: -on-primary-container; }
+.device-icon-locked{ -fx-text-fill: -on-secondary-container; }
+
+.device-name {
+    -fx-text-fill: -on-surface;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+.device-subtitle {
+    -fx-text-fill: -on-surface-variant;
+    -fx-font-size: 11px;
+    -fx-letter-spacing: 0.05em;
+}
+
+/* M3 state chips — small assist chips */
+.state-chip {
+    -fx-background-color: -surface-high;
+    -fx-text-fill: -on-surface-variant;
+    -fx-padding: 4 10 4 10;
+    -fx-background-radius: 100;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.05em;
+}
+.state-chip-on {
+    -fx-background-color: -primary-container;
+    -fx-text-fill: -on-primary-container;
+}
+.state-chip-off {
+    -fx-background-color: -surface-high;
+    -fx-text-fill: -on-surface-variant;
+}
+.state-chip-locked {
+    -fx-background-color: -secondary-container;
+    -fx-text-fill: -on-secondary-container;
+}
+
+/* Legacy state-text classes (kept so older controller code compiles) */
+.device-state-on     { -fx-text-fill: -primary;   -fx-font-size: 12px; -fx-font-weight: bold; }
+.device-state-off    { -fx-text-fill: -on-surface-variant; -fx-font-size: 12px; -fx-font-weight: bold; }
+.device-state-locked { -fx-text-fill: -secondary; -fx-font-size: 12px; -fx-font-weight: bold; }
+
+.decorator-badge {
+    -fx-text-fill: -secondary;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   Buttons — M3 button family
+     .action-button         = filled tonal (default)
+     .action-button-primary = filled (high emphasis)
+     .action-button-outline = outlined (medium emphasis, used for +Add)
+     .action-button-danger  = filled with error role
+     .spinner-button        = circular icon button (thermostat ± controls)
+   ═════════════════════════════════════════════════════════════════════ */
+.action-button {
+    -fx-background-color: -surface-high;
+    -fx-text-fill: -on-surface;
+    -fx-border-color: transparent;
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+    -fx-padding: 9 18 9 18;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.action-button:hover   { -fx-background-color: -surface-highest; }
+.action-button:pressed { -fx-background-color: derive(-surface-highest, 6%); }
+
+.action-button-primary {
+    -fx-background-color: -primary;
+    -fx-text-fill: -on-primary;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255,184,112,0.18), 12, 0.25, 0, 2);
+}
+.action-button-primary:hover   { -fx-background-color: derive(-primary, -5%); }
+.action-button-primary:pressed { -fx-background-color: derive(-primary, -12%); }
+
+.action-button-outline {
+    -fx-background-color: transparent;
+    -fx-text-fill: -primary;
+    -fx-border-color: -outline;
+    -fx-border-width: 1;
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+}
+.action-button-outline:hover {
+    -fx-background-color: derive(-primary, -55%);
+    -fx-border-color: -primary;
+}
+
+.action-button-danger {
+    -fx-background-color: -error-container;
+    -fx-text-fill: -on-error-container;
+    -fx-border-color: transparent;
+}
+.action-button-danger:hover { -fx-background-color: derive(-error-container, 6%); }
+
+.spinner-button {
+    -fx-background-color: -surface-high;
+    -fx-text-fill: -on-surface;
+    -fx-border-color: transparent;
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+    -fx-min-width: 38;
+    -fx-min-height: 38;
+    -fx-pref-width: 38;
+    -fx-pref-height: 38;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.spinner-button:hover   { -fx-background-color: -surface-highest; }
+.spinner-button:pressed { -fx-background-color: derive(-surface-highest, 6%); }
+
+.temperature-display {
+    -fx-text-fill: -primary;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-min-width: 70;
+    -fx-alignment: center;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   Bottom navigation — M3 Navigation Bar with pill indicator
+   The pill is a separate StackPane (.nav-icon-pill) inside each button.
+   It only colors when the parent button is active.
+   ═════════════════════════════════════════════════════════════════════ */
+.bottom-nav {
+    -fx-background-color: -surface-low;
+    -fx-border-color: transparent;
+    -fx-padding: 10 0 14 0;
+}
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -on-surface-variant;
+    -fx-border-color: transparent;
+    -fx-padding: 4 0 4 0;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.04em;
+    -fx-cursor: hand;
+    -fx-content-display: top;
+    -fx-graphic-text-gap: 6;
+}
+.nav-button:hover { -fx-text-fill: -on-surface; }
+
+.nav-button-active {
+    -fx-text-fill: -on-surface;
+    -fx-font-weight: bold;
+}
+
+/* The pill behind the icon */
+.nav-icon-pill {
+    -fx-background-color: transparent;
+    -fx-background-radius: 100;
+    -fx-padding: 4 18 4 18;
+    -fx-min-height: 30;
+    -fx-pref-height: 30;
+}
+.nav-button-active .nav-icon-pill {
+    -fx-background-color: -secondary-container;
+}
+.nav-icon {
+    -fx-font-size: 18px;
+    -fx-text-fill: -on-surface-variant;
+}
+.nav-button-active .nav-icon {
+    -fx-text-fill: -on-secondary-container;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   History feed rows — M3 list-item shape
+   ═════════════════════════════════════════════════════════════════════ */
+.event-row {
+    -fx-background-color: -surface-container;
+    -fx-border-color: transparent;
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+    -fx-padding: 12 14 12 14;
+    -fx-spacing: 12;
+}
+.event-row:hover {
+    -fx-background-color: -surface-high;
+}
+.event-avatar {
+    -fx-background-color: -surface-high;
+    -fx-background-radius: 100;
+    -fx-min-width: 36;
+    -fx-min-height: 36;
+    -fx-pref-width: 36;
+    -fx-pref-height: 36;
+    -fx-alignment: center;
+}
+.event-avatar-on     { -fx-background-color: -primary-container; }
+.event-avatar-off    { -fx-background-color: -surface-high; }
+.event-avatar-locked { -fx-background-color: -secondary-container; }
+.event-avatar-temp   { -fx-background-color: -tertiary-container; }
+
+.event-time {
+    -fx-text-fill: -on-surface-faint;
+    -fx-font-size: 11px;
+    -fx-min-width: 56;
+}
+.event-device {
+    -fx-text-fill: -on-surface;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.event-type {
+    -fx-text-fill: -on-surface-variant;
+    -fx-font-size: 11px;
+    -fx-letter-spacing: 0.05em;
+}
+
+/* Old dot classes — kept as fall-through colors */
+.event-dot-on     { -fx-text-fill: -primary;        -fx-font-size: 14px; }
+.event-dot-off    { -fx-text-fill: -on-surface-variant; -fx-font-size: 14px; }
+.event-dot-locked { -fx-text-fill: -secondary;      -fx-font-size: 14px; }
+.event-dot-temp   { -fx-text-fill: -tertiary;       -fx-font-size: 14px; }
+
+/* ═════════════════════════════════════════════════════════════════════
+   Pattern caption + empty state
+   ═════════════════════════════════════════════════════════════════════ */
+.pattern-caption {
+    -fx-text-fill: -on-surface-faint;
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+}
+.empty-state {
+    -fx-text-fill: -on-surface-variant;
+    -fx-font-size: 13px;
+    -fx-padding: 40 16 40 16;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   Decorator + add-device screens
+   ═════════════════════════════════════════════════════════════════════ */
+.decorator-section-title {
+    -fx-text-fill: -primary;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.decorator-description {
+    -fx-text-fill: -on-surface-variant;
+    -fx-font-size: 13px;
+    -fx-wrap-text: true;
+}
+.decorator-log-row {
+    -fx-text-fill: -on-secondary-container;
+    -fx-font-size: 11px;
+    -fx-font-family: "JetBrains Mono", "Consolas", "Courier New", monospace;
+    -fx-padding: 6 10 6 10;
+    -fx-background-color: -secondary-container;
+    -fx-background-radius: 8;
+}
+
+/* M3 surface card wrapper (used for decorator and dialog grouped sections) */
+.m3-card {
+    -fx-background-color: -surface-container;
+    -fx-background-radius: 16;
+    -fx-padding: 16;
+    -fx-spacing: 12;
+}
+
+/* M3 form-field controls */
+.choice-box {
+    -fx-background-color: -surface-high;
+    -fx-background-radius: 8;
+    -fx-text-fill: -on-surface;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 13px;
+    -fx-border-color: -outline-variant;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+}
+.choice-box:hover { -fx-background-color: -surface-highest; }
+.choice-box .label { -fx-text-fill: -on-surface; }
+.choice-box .arrow { -fx-background-color: -on-surface-variant; }
+.choice-box .context-menu {
+    -fx-background-color: -surface-high;
+    -fx-background-radius: 8;
+    -fx-padding: 4;
+}
+.choice-box .menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 8 12 8 12;
+}
+.choice-box .menu-item:focused { -fx-background-color: -surface-highest; }
+.choice-box .menu-item .label  { -fx-text-fill: -on-surface; }
+
+.text-field {
+    -fx-background-color: -surface-high;
+    -fx-text-fill: -on-surface;
+    -fx-prompt-text-fill: -on-surface-faint;
+    -fx-padding: 10 12 10 12;
+    -fx-background-radius: 8;
+    -fx-border-color: -outline-variant;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-font-size: 13px;
+}
+.text-field:focused {
+    -fx-border-color: -primary;
+    -fx-border-width: 2;
+    -fx-padding: 9 11 9 11; /* compensate for the +1px border */
+}
+
+/* M3 form label (small, semi-bold, sits above an input) */
+.form-label {
+    -fx-text-fill: -on-surface-variant;
+    -fx-font-size: 11px;
+    -fx-letter-spacing: 0.1em;
+    -fx-font-weight: bold;
+}
